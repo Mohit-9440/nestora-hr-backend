@@ -1,9 +1,12 @@
-const express = require('express');
+import express from "express";
+import { applyLeave, getMyLeaves, getAllLeaves, updateLeaveStatus } from "../controllers/leaveController.js";
+import { protect } from "../middlewares/authMiddleware.js";
+
 const router = express.Router();
-const { applyLeave, getLeaves, updateLeaveStatus } = require('../controllers/leaveController');
 
-router.post('/leaves', applyLeave);
-router.get('/leaves', getLeaves);
-router.patch('/leaves/:id', updateLeaveStatus);
+router.post("/apply", protect, applyLeave);
+router.get("/my", protect, getMyLeaves);
+router.get("/", protect, getAllLeaves);
+router.patch("/:id", protect, updateLeaveStatus);
 
-module.exports = router;
+export default router;
